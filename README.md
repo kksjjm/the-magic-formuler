@@ -2,6 +2,11 @@
 
 MagicScript로 마법 코드를 작성하면 바로 옆 실험장에서 실행 결과를 시각적으로 확인할 수 있는 웹 기반 마법 제작 샌드박스입니다.
 
+## 배포 링크
+
+- GitHub 저장소: https://github.com/kksjjm/the-magic-formuler
+- GitHub Pages: https://kksjjm.github.io/the-magic-formuler/
+
 ## 게임 설명
 
 『산식의 마법사』는 "마법은 곧 수식이다"라는 콘셉트의 실험형 게임입니다. 플레이어는 전용 언어인 MagicScript로 범위, 대상 조건, 속성 변화, 출력 방식을 작성하고, 코드가 물질 세계에 어떤 현상을 만드는지 즉시 확인합니다.
