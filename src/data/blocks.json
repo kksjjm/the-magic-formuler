@@ -1,0 +1,220 @@
+{
+  "ranges": [
+    {
+      "id": "range_orb",
+      "name": "원형 범위",
+      "icon": "○",
+      "formula": "radius = 22",
+      "shape": "circle",
+      "radius": 22,
+      "scanFactor": 1,
+      "note": "조준점 주변을 안정적으로 스캔한다."
+    },
+    {
+      "id": "range_wide",
+      "name": "넓은 장막",
+      "icon": "□",
+      "formula": "field = wide",
+      "shape": "rect",
+      "width": 72,
+      "height": 44,
+      "scanFactor": 1.85,
+      "note": "많은 대상을 한 번에 훑는다."
+    },
+    {
+      "id": "range_lance",
+      "name": "전방 관통선",
+      "icon": "→",
+      "formula": "lane width = 14",
+      "shape": "lane",
+      "width": 14,
+      "scanFactor": 0.72,
+      "note": "마법진에서 조준점까지 좁게 연결한다."
+    },
+    {
+      "id": "range_focus",
+      "name": "초점 구",
+      "icon": "◎",
+      "formula": "radius = 12",
+      "shape": "circle",
+      "radius": 12,
+      "scanFactor": 0.46,
+      "note": "소수 대상을 정밀하게 바꾼다."
+    }
+  ],
+  "filters": [
+    {
+      "id": "filter_water",
+      "name": "물 인식",
+      "icon": "H2O",
+      "formula": "type == H2O",
+      "conditionCost": 1,
+      "rules": [{ "field": "type", "op": "eq", "value": "H2O" }],
+      "note": "물 무리만 통과시킨다."
+    },
+    {
+      "id": "filter_air",
+      "name": "공기 인식",
+      "icon": "AIR",
+      "formula": "type == AIR",
+      "conditionCost": 1,
+      "rules": [{ "field": "type", "op": "eq", "value": "AIR" }],
+      "note": "공기 무리만 통과시킨다."
+    },
+    {
+      "id": "filter_earth",
+      "name": "흙 인식",
+      "icon": "EAR",
+      "formula": "type == EARTH",
+      "conditionCost": 1,
+      "rules": [{ "field": "type", "op": "eq", "value": "EARTH" }],
+      "note": "흙과 돌 성분만 통과시킨다."
+    },
+    {
+      "id": "filter_ice",
+      "name": "얼음 인식",
+      "icon": "ICE",
+      "formula": "state == ice",
+      "conditionCost": 1.2,
+      "rules": [{ "field": "state", "op": "eq", "value": "ice" }],
+      "note": "결빙된 물질만 고른다."
+    },
+    {
+      "id": "filter_low_momentum",
+      "name": "저운동량 인식",
+      "icon": "m<",
+      "formula": "momentum < 0.35",
+      "conditionCost": 1.4,
+      "rules": [{ "field": "momentum", "op": "lt", "value": 0.35 }],
+      "note": "느리거나 뭉친 대상을 찾는다."
+    },
+    {
+      "id": "filter_charged",
+      "name": "대전 인식",
+      "icon": "q+",
+      "formula": "charge > 0.8",
+      "conditionCost": 1.3,
+      "rules": [{ "field": "charge", "op": "gt", "value": 0.8 }],
+      "note": "전하가 쌓인 대상을 통과시킨다."
+    }
+  ],
+  "formulas": [
+    {
+      "id": "formula_chill",
+      "name": "결빙식",
+      "icon": "T-",
+      "formula": "momentum -= 0.60; temperature -= 68",
+      "operatorCost": 2,
+      "effects": [
+        { "attr": "momentum", "op": "add", "value": -0.6 },
+        { "attr": "temperature", "op": "add", "value": -68 },
+        { "attr": "cohesion", "op": "add", "value": 0.28 }
+      ],
+      "note": "물의 운동량과 온도를 낮춰 얼음 상태를 만든다."
+    },
+    {
+      "id": "formula_stillness",
+      "name": "정지식",
+      "icon": "m0",
+      "formula": "momentum -= 0.35; cohesion += 0.48",
+      "operatorCost": 1.6,
+      "effects": [
+        { "attr": "momentum", "op": "add", "value": -0.35 },
+        { "attr": "cohesion", "op": "add", "value": 0.48 }
+      ],
+      "note": "대상을 한곳으로 모아 응집 규칙을 유도한다."
+    },
+    {
+      "id": "formula_heat",
+      "name": "가열식",
+      "icon": "T+",
+      "formula": "temperature += 142; momentum += 0.42",
+      "operatorCost": 2.1,
+      "effects": [
+        { "attr": "temperature", "op": "add", "value": 142 },
+        { "attr": "momentum", "op": "add", "value": 0.42 }
+      ],
+      "note": "액체를 증기로, 흙을 유리화 직전으로 밀어 올린다."
+    },
+    {
+      "id": "formula_push",
+      "name": "가속식",
+      "icon": "v→",
+      "formula": "velocity += aim * 8.5; momentum += 0.72",
+      "operatorCost": 2.4,
+      "effects": [
+        { "attr": "velocity", "op": "pushTowardAim", "value": 8.5 },
+        { "attr": "momentum", "op": "add", "value": 0.72 }
+      ],
+      "note": "선택된 대상을 조준 방향으로 밀어낸다."
+    },
+    {
+      "id": "formula_charge",
+      "name": "대전식",
+      "icon": "q+",
+      "formula": "charge += 1.35; temperature += 32",
+      "operatorCost": 2.3,
+      "effects": [
+        { "attr": "charge", "op": "add", "value": 1.35 },
+        { "attr": "temperature", "op": "add", "value": 32 },
+        { "attr": "velocity", "op": "swirl", "value": 4.6 }
+      ],
+      "note": "공기와 흙에 전하를 부여해 섬광과 유리화를 만든다."
+    },
+    {
+      "id": "formula_condense",
+      "name": "응축식",
+      "icon": "C",
+      "formula": "temperature -= 82; momentum -= 0.28",
+      "operatorCost": 1.9,
+      "effects": [
+        { "attr": "temperature", "op": "add", "value": -82 },
+        { "attr": "momentum", "op": "add", "value": -0.28 },
+        { "attr": "cohesion", "op": "add", "value": 0.22 }
+      ],
+      "note": "희박한 공기층을 안개처럼 응집시킨다."
+    }
+  ],
+  "outputs": [
+    {
+      "id": "output_release",
+      "name": "즉시 출력",
+      "icon": "▶",
+      "formula": "output = release",
+      "manaMultiplier": 1,
+      "castMultiplier": 1,
+      "note": "변환 결과를 바로 시뮬레이션에 반영한다."
+    },
+    {
+      "id": "output_focus",
+      "name": "정밀 출력",
+      "icon": "◇",
+      "formula": "output = focus",
+      "manaMultiplier": 0.82,
+      "castMultiplier": 1.28,
+      "effectScale": 0.86,
+      "note": "마나를 아끼는 대신 시전 시간이 늘어난다."
+    },
+    {
+      "id": "output_bloom",
+      "name": "확산 출력",
+      "icon": "※",
+      "formula": "output = bloom",
+      "manaMultiplier": 1.18,
+      "castMultiplier": 0.9,
+      "effectScale": 1.08,
+      "note": "주변에도 약한 파동을 남긴다."
+    },
+    {
+      "id": "output_anchor",
+      "name": "고정 출력",
+      "icon": "⊥",
+      "formula": "output = anchor",
+      "manaMultiplier": 1.06,
+      "castMultiplier": 1.12,
+      "effectScale": 0.96,
+      "anchor": true,
+      "note": "변환 뒤 대상의 속도를 낮춰 형태를 보존한다."
+    }
+  ]
+}

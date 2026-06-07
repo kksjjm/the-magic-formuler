@@ -1,0 +1,87 @@
+{
+  "manaWeights": {
+    "momentum": 18,
+    "temperature": 0.22,
+    "charge": 9,
+    "velocity": 2.4,
+    "cohesion": 11,
+    "state": 16
+  },
+  "types": [
+    {
+      "type": "H2O",
+      "name": "물",
+      "difficulty": 1,
+      "baseState": "water",
+      "attributes": ["momentum", "temperature", "charge", "cohesion"],
+      "transitions": [
+        {
+          "state": "ice",
+          "visual": "ice_crystal",
+          "when": { "temperatureMax": 273, "momentumMax": 0.95 }
+        },
+        {
+          "state": "vapor",
+          "visual": "steam",
+          "when": { "temperatureMin": 373 }
+        },
+        {
+          "state": "water",
+          "visual": "water",
+          "when": { "temperatureMin": 273, "temperatureMax": 372.99 }
+        }
+      ],
+      "aggregation": { "state": "ice", "cohesionMin": 0.35, "radius": 6 }
+    },
+    {
+      "type": "AIR",
+      "name": "공기",
+      "difficulty": 0.78,
+      "baseState": "air",
+      "attributes": ["momentum", "temperature", "charge"],
+      "transitions": [
+        {
+          "state": "plasma",
+          "visual": "spark",
+          "when": { "chargeMin": 1.2, "temperatureMin": 315 }
+        },
+        {
+          "state": "mist",
+          "visual": "mist",
+          "when": { "temperatureMax": 268, "momentumMax": 0.4 }
+        },
+        {
+          "state": "air",
+          "visual": "air",
+          "when": {}
+        }
+      ],
+      "aggregation": { "state": "mist", "cohesionMin": 0.25, "radius": 8 }
+    },
+    {
+      "type": "EARTH",
+      "name": "흙",
+      "difficulty": 1.24,
+      "baseState": "dust",
+      "attributes": ["momentum", "temperature", "charge", "cohesion"],
+      "transitions": [
+        {
+          "state": "glass",
+          "visual": "glass",
+          "when": { "temperatureMin": 400, "chargeMin": 0.2 }
+        },
+        {
+          "state": "stone",
+          "visual": "stone",
+          "when": { "momentumMax": 0.18, "cohesionMin": 0.55 }
+        },
+        {
+          "state": "dust",
+          "visual": "dust",
+          "when": {}
+        }
+      ],
+      "aggregation": { "state": "stone", "cohesionMin": 0.55, "radius": 5 }
+    }
+  ]
+}

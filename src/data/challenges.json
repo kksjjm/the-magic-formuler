@@ -1,0 +1,39 @@
+{
+  "challenges": [
+    {
+      "id": "free",
+      "name": "자유 실험",
+      "goal": "원하는 산식을 조합한다.",
+      "targets": [],
+      "medal": { "mana": 9999, "castTime": 99 }
+    },
+    {
+      "id": "ice_core",
+      "name": "얼음 핵",
+      "goal": "얼음 14개 이상 생성",
+      "targets": [{ "field": "state", "op": "eq", "value": "ice", "count": 14 }],
+      "medal": { "mana": 165, "castTime": 2.8 }
+    },
+    {
+      "id": "steam_arc",
+      "name": "증기 고리",
+      "goal": "증기 12개 이상 생성",
+      "targets": [{ "field": "state", "op": "eq", "value": "vapor", "count": 12 }],
+      "medal": { "mana": 190, "castTime": 2.6 }
+    },
+    {
+      "id": "static_field",
+      "name": "정전기장",
+      "goal": "플라즈마 10개 이상 생성",
+      "targets": [{ "field": "state", "op": "eq", "value": "plasma", "count": 10 }],
+      "medal": { "mana": 175, "castTime": 3.2 }
+    },
+    {
+      "id": "glass_seed",
+      "name": "유리화",
+      "goal": "유리 5개 이상 생성",
+      "targets": [{ "field": "state", "op": "eq", "value": "glass", "count": 5 }],
+      "medal": { "mana": 215, "castTime": 3.4 }
+    }
+  ]
+}

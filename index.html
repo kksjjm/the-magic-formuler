@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>산식의 마법사</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">TMF</span>
+          <div>
+            <h1>산식의 마법사</h1>
+            <p>MagicScript Laboratory</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="resetWorldButton" class="icon-button" type="button" title="실험장 초기화">↻</button>
+          <button id="toggleRunButton" class="icon-button" type="button" title="시뮬레이션 재생">▶</button>
+          <button id="stepButton" class="icon-button" type="button" title="한 틱 진행">|▶</button>
+          <label class="select-label" for="speedSelect">
+            <span>속도</span>
+            <select id="speedSelect">
+              <option value="0.35">느림</option>
+              <option value="1" selected>보통</option>
+              <option value="1.8">빠름</option>
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="panel editor-panel" aria-label="MagicScript 편집기">
+          <div class="panel-title">
+            <h2>MagicScript</h2>
+            <span id="compileBadge" class="status-badge">대기</span>
+          </div>
+
+          <div class="save-row">
+            <input id="spellNameInput" type="text" maxlength="32" placeholder="마법 이름" />
+            <button id="saveSpellButton" class="icon-button" type="button" title="저장">↓</button>
+          </div>
+
+          <label class="code-label" for="spellCodeInput">spell.tmf</label>
+          <textarea id="spellCodeInput" class="code-editor" rows="20" spellcheck="false"></textarea>
+
+          <div class="editor-actions">
+            <button id="runSpellButton" class="primary-button" type="button">실행</button>
+            <label class="toggle-label" for="autoRunToggle">
+              <input id="autoRunToggle" type="checkbox" />
+              <span>자동 실행</span>
+            </label>
+          </div>
+
+          <div class="example-row" id="exampleList"></div>
+
+          <div id="compilerOutput" class="compiler-output"></div>
+
+          <div class="language-card">
+            <strong>MagicScript v0</strong>
+            <code>range circle 22</code>
+            <code>target type == H2O</code>
+            <code>set temperature -= 68</code>
+            <code>push aim 8.5</code>
+            <code>output release</code>
+          </div>
+        </section>
+
+        <section class="stage-panel" aria-label="샌드박스 실험장">
+          <div class="stage-toolbar">
+            <div>
+              <strong id="storyTitle">코드 실행 프리뷰</strong>
+              <span id="storyLine">소스를 수정하면 컴파일 결과와 실행 효과가 바로 실험장에 반영된다.</span>
+            </div>
+            <button id="castButton" class="primary-button" type="button">실행</button>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="worldCanvas"></canvas>
+            <div class="aim-chip" id="aimChip">x 50 · y 35</div>
+          </div>
+        </section>
+
+        <aside class="panel inspector-panel" aria-label="마법 상태">
+          <section class="metrics-section">
+            <div class="panel-title">
+              <h2>실행 분석</h2>
+              <span id="targetCount" class="status-badge">대상 0</span>
+            </div>
+            <div class="metric-grid">
+              <div class="metric">
+                <span>마나</span>
+                <strong id="manaMetric">0</strong>
+              </div>
+              <div class="metric">
+                <span>시전</span>
+                <strong id="castMetric">0.0s</strong>
+              </div>
+              <div class="metric">
+                <span>등급</span>
+                <strong id="gradeMetric">-</strong>
+              </div>
+            </div>
+            <div class="meter">
+              <span id="meterFill"></span>
+            </div>
+          </section>
+
+          <section class="summary-section">
+            <div class="panel-title">
+              <h2>컴파일 결과</h2>
+            </div>
+            <div id="spellSummary" class="spell-summary"></div>
+          </section>
+
+          <section class="challenge-section">
+            <div class="section-row">
+              <label for="challengeSelect">도전</label>
+              <select id="challengeSelect"></select>
+            </div>
+            <div id="challengeStatus" class="challenge-status"></div>
+          </section>
+
+          <section class="storage-section">
+            <div class="share-row">
+              <button id="exportButton" type="button">코드 내보내기</button>
+              <button id="importButton" type="button">코드 불러오기</button>
+            </div>
+            <textarea id="shareCodeBox" rows="3" spellcheck="false" aria-label="공유 코드"></textarea>
+            <div id="savedSpells" class="saved-list"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
